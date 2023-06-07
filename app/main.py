@@ -3,9 +3,7 @@ import json
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-
-
-# simple python application
+# Simple python application
 
 app = FastAPI()
 
