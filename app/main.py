@@ -1,10 +1,17 @@
 from typing import Optional
 import json
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+
+
+
+# Update the file path to point to the correct location
+
 # Simple python application
 
+file_path = os.path.join(os.path.dirname(__file__), 'items.json')
 app = FastAPI()
 
 # need to install splunk otel package in application
@@ -17,7 +24,7 @@ class Item(BaseModel):
   price: float
 
 
-with open('items.json', 'r') as f:
+with open(file_path, 'r') as f:
   items = json.load(f)
 
 
