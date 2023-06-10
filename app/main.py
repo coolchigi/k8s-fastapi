@@ -23,6 +23,7 @@ with open(file_path, 'r') as f:
   items = json.load(f)
 
 
+
 @app.get("/")
 def read_root():
   return {"Hello ": "From My Kubernetes App"}
@@ -30,7 +31,7 @@ def read_root():
 
 @app.get("/items/")
 def get_items():
-  return items
+  return json.dumps(items)
 
 
 @app.post("/items/")
