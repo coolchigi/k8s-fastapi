@@ -6,17 +6,12 @@ from pydantic import BaseModel
 
 
 
-
 # Update the file path to point to the correct location
 
 # Simple python application
 
 file_path = os.path.join(os.path.dirname(__file__), 'items.json')
 app = FastAPI()
-
-# need to install splunk otel package in application
-# need to install open telemetry/instrimentation pacakge
-
 
 class Item(BaseModel):
   id: Optional[int] = None
@@ -40,7 +35,12 @@ def get_items():
 
 @app.post("/items/")
 def create_item(item: Item):
-  item_id = max([p['id'] for p in items]) + 1
+  # user did not specify id in the post or it already exist
+  if item.id is None or item.id in [existing_item['id'] for existing_item in items]:
+    item_id = max([p['id'] for p in items]) + 1
+  else:
+    item_id = item.id
+
   new_item = {"id": item_id, "name": item.name, "price": item.price}
   items.append(new_item)
   with open('items.json', 'w') as f:
