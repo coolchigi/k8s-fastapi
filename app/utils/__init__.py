@@ -1,1 +1,0 @@
-'''Takes in a number n, returns the square of n'''
