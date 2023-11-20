@@ -53,7 +53,7 @@ Excited? Me too! But before we embark on this journey, let's make sure you've go
 ---------------- 
 We'll walk through the process of setting up a FastAPI application that manages a list of items. In this section, we will show you how to set up a simple FastAPI application that can perform CRUD (Create, Read, Update, Delete) operations on a JSON file. The JSON file would serve as our `mock` database. Ideally you would want to use a SQL or NO-SQL database for this purpose
 
-#### Prerequisites
+#### App Prerequisites
 To follow this guide, you will need:
 
 - Python 3.6 or higher installed on your system.
