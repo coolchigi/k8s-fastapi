@@ -12,9 +12,8 @@
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#setting-Up-the-FastAPI-Application">Setting Up the FastAPI Application</a></li>    
     <li><a href="#dockerizing-the-app">Dockerizing the app</a></li>
-    <li><a href="#Kubernetes">Kubernetes - Local Dev with Minikube</a></li>
+    <li><a href="#kubernetes-Local-Dev-With-Minikube">Kubernetes - Local Dev with Minikube</a></li>
     <li><a href="#challenges-closing">Challenges & Closing</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
