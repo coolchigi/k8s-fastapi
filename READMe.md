@@ -8,13 +8,12 @@
   <ol>
     <li><a href="#tech-stack">Tech Stack</a>
     </li>
-    <li><a href="#project-description">Project Description</a></li>
-    <li><a href="#kubernetes">Kubernetes</a></li>    
-    <li><a href="#minikube">Minikube</a></li>
-    <li><a href="#fastapi">FastApi</a></li>
-    <li><a href="#docker">Docker</a></li>
-    <li><a href="#together">Bringing It All Together</a></li>
-    <li><a href="#integration-testing">Integration Testing</a></li>
+    <li><a href="#project-description">Introduction</a></li>
+    <li><a href="#prerequisitesn">Prerequisites</a></li>
+    <li><a href="#fastapi">Setting Up the FastAPI Application</a></li>    
+    <li><a href="#docker_fastapi">Dockerizing the FastAPI Application</a></li>
+    <li><a href="#Kubernetes">Kubernetes</a></li>
+    <li><a href="#minikube">Local Dev with Minikube</a></li>
     <li><a href="#challenges-closing">Challenges & Closing</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
