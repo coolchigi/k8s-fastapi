@@ -140,7 +140,8 @@ This endpoint creates a new item and adds it to the JSON file, generating a  uni
 [Delete Route](./app/main.py#L69)
 This endpoint deletes an existing item by its id, returning a success message if the item is found and deleted. Else, it returns an error message if the item is not found
 ### Put
-[Put Route](./app/main.py#L58)
+[Put Route](./app/main.py#L58) 
+This endpoint updates an existing item by its id returning a success message if the item is found and updated. Else It returns an error message if the item is not found
 
 ## Running the application
 To run the application, use the following command:
@@ -174,19 +175,60 @@ curl -X DELETE http://127.0.0.1:8000/items/3
 ```
 
 ### Generating documentation
-One of the great features of FastAPI is that it automatically generates interactive documentation for your API using OpenAPI and Swagger UI. To access the documentation, visit http://127.0.0.1:8000/docs in your browser. You will see something like this:
+One of the great features of FastAPI is that it automatically generates interactive documentation for your API using OpenAPI and Swagger UI. To access the documentation, visit `http://127.0.0.1:8000/docs` in your browser. You will see something like this:
 
 ![Swagger UI]
 
 You can use the documentation to explore and test your API endpoints. You can also download the OpenAPI schema as a JSON file by clicking on the Download button at the top right corner.
 
-Another option for documentation is ReDoc, which provides a more minimalist and responsive interface. To access ReDoc, visit http://127.0.0.1:8000/redoc in your browser. You will see something like this:
+Another option for documentation is ReDoc, which provides a more minimalist and responsive interface. To access ReDoc, visit `http://127.0.0.1:8000/redoc` in your browser. You will see something like this:
 
 ![ReDoc]
 
 You can use ReDoc to view the details and examples of your API endpoints. You can also expand and collapse the sections by clicking on the headers.
 ### Dockeririzing the app
 ---------------- 
+Dockerizing is the process of packaging, deploying, and running applications using Docker containers. Docker containers are isolated environments that contain everything your application needs to run, such as code, libraries, dependencies, and configuration. By using Docker, you can ensure that your application runs consistently across different platforms and environments.
+
+In this section, we'll learn how to dockerize a FastAPI application from scratch, based on the official Python image. This is what you would want to do in most cases, for example:
+
+- Using Kubernetes or similar tools.
+- When running on a Raspberry Pi.
+- Using a cloud service that would run a container image for you, etc.
+
+Here are the steps to dockerize a FastAPI application:
+
+Create a `requirements.txt` file that lists all the Python dependencies for your application. For example, if your application uses `FastAPI` and `Uvicorn`, your `requirements.txt` file would look like this:
+```txt
+fastapi
+uvicorn
+```
+Next, create a Dockerfile that contains instructions for building a Docker image for your application. A Docker image is a snapshot of your application and its dependencies, which can be run as a Docker container. A basic Dockerfile for a FastAPI application may look something like this:
+
+[Docker file](./Dockerfile#L1-L14)
+
+In this Dockerfile:
+
+- We use a lightweight Python 3.9 image as the base.
+- We set the working directory inside the container to /code.
+- We copy the requirements.txt file and install the other necessary dependencies inside the conatiner.
+- Copy the rest of the app source code, expose the port 8000 that the app listens on & define the command to run the app using Uvicorn.
+
+#### Build
+Build using: ``docker build -t fastapi_app .``
+
+This will create a Docker image named fastapi_app from the current directory. You can see the built image by running:
+`docker images`
+
+#### Run
+Run a Docker container from the image using the following command:
+`docker run -p 8000:8000 -d fastapi_app`
+
+This will map the port 8000 of the container to the port 8000 of the host machine, and run the container in the background. You can see the running container by running:
+
+`docker ps`
+
+You can now test your application by visiting `http://localhost:8000` in your browser. You should see the FastAPI application in action.
 
 ### Kubernetes
 ---------------- 
