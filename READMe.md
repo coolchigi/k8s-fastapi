@@ -186,7 +186,8 @@ Another option for documentation is ReDoc, which provides a more minimalist and 
 ![ReDoc]
 
 You can use ReDoc to view the details and examples of your API endpoints. You can also expand and collapse the sections by clicking on the headers.
-### Dockeririzing the app
+
+### Dockerizing the app
 ---------------- 
 Dockerizing is the process of packaging, deploying, and running applications using Docker containers. Docker containers are isolated environments that contain everything your application needs to run, such as code, libraries, dependencies, and configuration. By using Docker, you can ensure that your application runs consistently across different platforms and environments.
 
