@@ -12,18 +12,12 @@
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#setting-Up-the-FastAPI-Application">Setting Up the FastAPI Application</a></li>    
     <li><a href="#dockerizing-the-app">Dockerizing the app</a></li>
-    <li><a href="#Kubernetes">Kubernetes</a></li>
-    <li><a href="#minikube">Minikube</a></li>
+    <li><a href="#Kubernetes">Kubernetes - Local Dev with Minikube</a></li>
     <li><a href="#challenges-closing">Challenges & Closing</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
-- Built using the FastApi Python Library
-- Docker
-    - Built app and tag with `docker build -t k8s-fastapi" .`
-    - Run the app using `docker run --port 8000:80  k8s-fastapi`
-- To be deployed on K8s cluster
 
 ### Project Details
 ---------------- 
@@ -41,7 +35,7 @@ Excited? Me too! But before we embark on this journey, let's make sure you've go
 - **Your Coding Toolbox:** Bring along your Python skills and a pinch of experience with other libraries.
 - **Kubernetes Basics:** No need to be a pro; we're here to guide you through the Kubernetes landscape.
 - **Docker Know-How:** A basic understanding of containers and images will do wonders.
-- **Minikube Setup:** Don't worry; there's got a simple minikube guide for [Minikube Installation](https://minikube.sigs.k8s.io/docs/start/).
+- **Minikube Setup:** Don't worry; there's a simple minikube guide for installation here [Minikube Installation](https://minikube.sigs.k8s.io/docs/start/).
 
 ### Tech Stack
 ---------------- 
@@ -49,7 +43,7 @@ Excited? Me too! But before we embark on this journey, let's make sure you've go
 - Docker
 - Python FastApi Library
 
-### Setting Up the FastAPI Application
+### Setting Up the FastAPI Application  ⚡
 ---------------- 
 We'll walk through the process of setting up a FastAPI application that manages a list of items. In this section, we will show you how to set up a simple FastAPI application that can perform CRUD (Create, Read, Update, Delete) operations on a JSON file. The JSON file would serve as our `mock` database. Ideally you would want to use a SQL or NO-SQL database for this purpose
 
@@ -231,12 +225,176 @@ This will map the port 8000 of the container to the port 8000 of the host machin
 
 You can now test your application by visiting `http://localhost:8000` in your browser. You should see the FastAPI application in action.
 
-### Kubernetes
+### Kubernetes - Local Dev with Minikube
 ---------------- 
+Kubernetes is an open-source platform for managing containerized applications across multiple nodes. It offers features such as service discovery, load balancing, scaling, rolling updates, and self-healing. However, setting up a Kubernetes cluster can be complex and resource-intensive, especially for local development and testing purposes.
 
-### Local Dev with Minikube
----------------- 
+Minikube is a tool that simplifies the process of running a single-node Kubernetes cluster on your local machine. It uses a virtual machine (VM) to run the Kubernetes components, and allows you to interact with the cluster using the kubectl command-line tool. Minikube is ideal for experimenting with Kubernetes features and deploying applications without the need for a cloud provider.
+
+In this section, we will show you how to set up a local Kubernetes cluster using Minikube and deploy a sample application to it. We will assume that you have already dockerized your FastAPI application as described in the previous section.
+
+#### Minikube Prerequisites
+
+To follow this guide, you will need:
+
+- A computer or server with at least 2 GB of RAM and 20 GB of disk space.
+- A hypervisor such as VirtualBox, VMware, Hyper-V, or KVM installed on your machine.
+- Docker installed on your machine.
+- kubectl installed on your machine.
+- Minikube installed on your machine.
+
+### Starting the cluster
+
+To start the cluster, run the following command:
+
+```
+minikube start
+```
+
+This will create and start a VM with the Kubernetes components. It may take a few minutes to complete. You can check the status of the cluster by running:
+
+```
+minikube status
+```
+
+You should see something like this:
+
+```
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+```
+
+This means that the cluster is ready to use. You can also access the Kubernetes dashboard by running:
+
+```
+minikube dashboard
+```
+
+This will open the dashboard in your browser, where you can view and manage your cluster resources.
+
+### Deploying the application
+
+To deploy your application to the cluster, you need to create a Kubernetes manifest file that defines the desired state of your application. A manifest file is a YAML or JSON file that contains one or more Kubernetes objects, such as Pods, Services, Deployments, etc.
+
+For this example, we will create a manifest file named `app.yaml` that contains two objects: a Deployment and a Service. A Deployment is a resource that manages the creation and update of Pods, which are the basic units of execution in Kubernetes. A Service is a resource that exposes a Pod or a group of Pods to the network.
+
+Here is the content of the `app.yaml` file:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-app
+spec:
+  selector:
+    matchLabels:
+      app: fastapi-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fastapi-app
+    spec:
+      containers:
+      - name: fastapi-app
+        image: fastapi_app # The name of the Docker image we built in the previous section
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-app
+spec:
+  selector:
+    app: fastapi-app
+  type: NodePort # Expose the service on a port of the node
+  ports:
+  - port: 8000
+    targetPort: 8000
+    nodePort: 30000 # The port of the node where the service is accessible
+```
+
+In this file, we define a Deployment that creates a Pod with one container running the `fastapi_app` image. We also expose the port 8000 of the container to the Pod. Then, we define a Service that selects the Pod with the label `app: fastapi-app` and exposes it on the port 30000 of the node.
+
+To apply the manifest file to the cluster, run the following command:
+
+```
+kubectl apply -f app.yaml
+```
+
+This will create the Deployment and the Service in the cluster. You can verify that they are created by running:
+
+```
+kubectl get deployment fastapi-app
+kubectl get service fastapi-app
+```
+
+You should see something like this:
+
+```
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+fastapi-app   1/1     1            1           2m
+```
+
+```
+NAME          TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+fastapi-app   NodePort   10.101.142.12   <none>        8000:30000/TCP   2m
+```
+
+This means that the application is deployed and running in the cluster.
+
+### Accessing the application
+
+To access the application, you need to find the IP address of the node where the Service is exposed. You can do that by running:
+
+```
+minikube ip
+```
+
+You should see something like this:
+
+```
+192.168.99.100
+```
+
+This is the IP address of the node. To access the application, you can use this IP address and the node port (30000) in your browser. For example:
+
+```
+http://192.168.99.100:30000
+```
+
+You should see the FastAPI application in action.
+
+### Stopping and deleting the cluster
+
+To stop the cluster, run the following command:
+
+```
+minikube stop
+```
+
+This will stop the VM and the Kubernetes components. To delete the cluster, run the following command:
+
+```
+minikube delete
+```
+
+This will delete the VM and all the cluster resources.
+
 
 ### Challenges & Closing
 ---------------- 
+Working on this project was a great learning experience for me. I faced some challenges along the way, such as:
+
+- Setting up the Kubernetes cluster using Minikube and deploying the FastAPI application to it. I had to learn how to use kubectl, create manifest files, and troubleshoot some errors.
+- Dockerizing the FastAPI application and building a Docker image from the Dockerfile. I had to learn how to write a Dockerfile, use Docker commands, and push the image to a registry.
+- Writing a good README file that explains the project, its features, and how to use it. I had to learn how to use Markdown, structure the content, and add screenshots and GIFs.
+- Despite these challenges, I was able to overcome them and complete the project successfully. I learned a lot of new skills and technologies that will help me in my future projects. I also enjoyed working on this project and I hope you find it useful and interesting.
+
+If you have any feedback, questions, or suggestions, please feel free to contact me or open an issue on GitHub. I would love to hear from you and improve this project. Thank you for reading and happy coding! 😊
 
