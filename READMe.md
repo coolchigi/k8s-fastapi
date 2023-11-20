@@ -35,7 +35,7 @@ Why a FastApi application? The FastAPI library makes it easier to set up rest en
 - FastAPI includes built-in support for OAuth and JWT (JSON Web Tokens), making it easier to implement authentication and authorization in your applications.
 - Seamless integration with other services such as Docker, GraphQL, and other frontend frameworks
 
-### Prerequisites 🛠️
+### Prerequisites  🛠️
 ---------------- 
 Excited? Me too! But before we embark on this journey, let's make sure you've got the essentials:
 - **Your Coding Toolbox:** Bring along your Python skills and a pinch of experience with other libraries.
