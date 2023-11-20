@@ -12,7 +12,7 @@
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#setting-Up-the-FastAPI-Application">Setting Up the FastAPI Application</a></li>    
     <li><a href="#dockerizing-the-app">Dockerizing the app</a></li>
-    <li><a href="#kubernetes-Local-Dev-With-Minikube">Kubernetes - Local Dev with Minikube</a></li>
+    <li><a href="#kubernetes-Local-Dev-With-Minikube">Kubernetes: Local Dev with Minikube</a></li>
     <li><a href="#challenges-closing">Challenges & Closing</a></li>
   </ol>
 </details>
@@ -224,7 +224,7 @@ This will map the port 8000 of the container to the port 8000 of the host machin
 
 You can now test your application by visiting `http://localhost:8000` in your browser. You should see the FastAPI application in action.
 
-### Kubernetes - Local Dev with Minikube
+### Kubernetes: Local Dev with Minikube
 ---------------- 
 Kubernetes is an open-source platform for managing containerized applications across multiple nodes. It offers features such as service discovery, load balancing, scaling, rolling updates, and self-healing. However, setting up a Kubernetes cluster can be complex and resource-intensive, especially for local development and testing purposes.
 
@@ -242,7 +242,7 @@ To follow this guide, you will need:
 - kubectl installed on your machine.
 - Minikube installed on your machine.
 
-### Starting the cluster
+#### Starting the cluster
 
 To start the cluster, run the following command:
 
@@ -275,7 +275,7 @@ minikube dashboard
 
 This will open the dashboard in your browser, where you can view and manage your cluster resources.
 
-### Deploying the application
+#### Deploying the application
 
 To deploy your application to the cluster, you need to create a Kubernetes manifest file that defines the desired state of your application. A manifest file is a YAML or JSON file that contains one or more Kubernetes objects, such as Pods, Services, Deployments, etc.
 
@@ -347,7 +347,7 @@ fastapi-app   NodePort   10.101.142.12   <none>        8000:30000/TCP   2m
 
 This means that the application is deployed and running in the cluster.
 
-### Accessing the application
+#### Accessing the application
 
 To access the application, you need to find the IP address of the node where the Service is exposed. You can do that by running:
 
@@ -369,7 +369,7 @@ http://192.168.99.100:30000
 
 You should see the FastAPI application in action.
 
-### Stopping and deleting the cluster
+#### Stopping and deleting the cluster
 
 To stop the cluster, run the following command:
 
