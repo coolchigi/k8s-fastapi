@@ -11,7 +11,7 @@
     <li><a href="#introduction">Introduction</a></li>
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#setting-Up-the-FastAPI-Application">Setting Up the FastAPI Application</a></li>    
-    <li><a href="#Dockerizing-the-app">Dockerizing the app</a></li>
+    <li><a href="#dockerizing-the-app">Dockerizing the app</a></li>
     <li><a href="#Kubernetes">Kubernetes</a></li>
     <li><a href="#minikube">Minikube</a></li>
     <li><a href="#challenges-closing">Challenges & Closing</a></li>
