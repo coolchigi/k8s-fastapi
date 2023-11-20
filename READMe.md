@@ -129,18 +129,18 @@ with open(file_path, 'r') as f:
 In the following code, we are setting up a Pydantic model named `Item`. It specifies the structure of an item, including an `optional id`, a required `name`, and a **required** `price`.
 
 #### Get
-[main.py](./app/main.py#L27-L34)
+[Get routes](./app/main.py#L27-L34)
 These lines create two routes, one for the welcome message and the other one to return all the items in the JSON file
 
 #### Post
-[main.py](./app/main.py#L37)
+[Post Route](./app/main.py#L37)
 This endpoint creates a new item and adds it to the JSON file, generating a  unique id for the item if not provided or already exists
 
 #### Delete
-[main.py](./app/main.py#L69)
+[Delete Route](./app/main.py#L69)
 This endpoint deletes an existing item by its id, returning a success message if the item is found and deleted. Else, it returns an error message if the item is not found
 ### Put
-[main.py](./app/main.py#L58)
+[Put Route](./app/main.py#L58)
 
 ## Running the application
 To run the application, use the following command:
